@@ -1,3 +1,3 @@
 # kbladin.github.io
 
-[game_document.pdf](http://kbladin.github.io/board_game_project/raw/main/game_document.pdf)
+[Intro.pdf](http://kbladin.github.io/board_game_project/docs/board_game_project/game_document.pdf).
