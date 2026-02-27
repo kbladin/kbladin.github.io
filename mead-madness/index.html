@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nära Mjöden-Upplevelse Februari 2026</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap');
+
+  :root {
+    --bg:        #1a1410;
+    --bg2:       #231c15;
+    --border:    #5c3d1e;
+    --amber:     #c8892a;
+    --amber-lt:  #e8b054;
+    --amber-dim: #7a5018;
+    --cream:     #f0e6d0;
+    --muted:     #a08870;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    min-height: 100vh;
+    background: radial-gradient(ellipse 80% 50% at 50% 0%, #3d2508 0%, transparent 55%), var(--bg);
+    color: var(--cream);
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: clamp(16px, 2vw, 22px);
+  }
+
+  body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100vh;
+    padding: clamp(2rem, 5vw, 5rem) clamp(2rem, 6vw, 8rem);
+    gap: clamp(1.5rem, 3vw, 3rem) clamp(3rem, 6vw, 8rem);
+  }
+
+  /* ── TITLE (spans full width) ── */
+  header {
+    grid-column: 1 / -1;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: clamp(1rem, 2vw, 2rem);
+  }
+
+  header h1 {
+    font-family: 'IM Fell English', serif;
+    font-size: clamp(2rem, 5vw, 5rem);
+    color: var(--amber-lt);
+    text-shadow: 0 0 60px rgba(200,137,42,0.4);
+    line-height: 1.1;
+  }
+
+  /* ── LEFT COLUMN ── */
+  .col-left {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1.2rem, 2.5vw, 2.5rem);
+  }
+
+  .section-label {
+    font-size: 0.75em;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--amber-dim);
+    margin-bottom: 0.4em;
+  }
+
+  /* Results button */
+  .btn-results {
+    display: inline-block;
+    font-family: 'IM Fell English', serif;
+    font-size: clamp(1.1rem, 2.5vw, 2rem);
+    color: var(--amber-lt);
+    text-decoration: none;
+    border-bottom: 1px solid var(--amber-dim);
+    padding-bottom: 0.1em;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .btn-results:hover { color: #fff; border-color: var(--amber-lt); }
+
+  .not-ready {
+    font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  /* Form button – hidden on wide screens (TV), shown on narrow (mobile) */
+  .btn-form {
+    display: inline-block;
+    font-family: 'Crimson Pro', serif;
+    font-size: clamp(1rem, 1.8vw, 1.3rem);
+    font-weight: 600;
+    color: #1a0e05;
+    background: var(--amber);
+    text-decoration: none;
+    padding: 0.45em 1.1em;
+    border-radius: 4px;
+    transition: filter 0.15s;
+  }
+  .btn-form:hover { filter: brightness(1.15); }
+
+  @media (min-width: 900px) {
+    .btn-form { display: none; }
+  }
+
+  /* Previous sessions */
+  .prev-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4em;
+  }
+
+  .prev-list a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: clamp(0.85rem, 1.5vw, 1.1rem);
+    transition: color 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+  }
+  .prev-list a::before { content: '→'; color: var(--border); font-size: 0.85em; }
+  .prev-list a:hover { color: var(--cream); }
+
+  .no-prev { color: var(--border); font-style: italic; font-size: 0.9em; }
+
+  /* ── RIGHT COLUMN ── */
+  .col-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: clamp(0.8rem, 1.5vw, 1.5rem);
+  }
+
+  #qr-code {
+    background: var(--cream);
+    padding: 8px;
+    border-radius: 4px;
+    line-height: 0;
+  }
+
+  #qr-code canvas, #qr-code img {
+    display: block;
+    width: clamp(120px, 15vw, 200px) !important;
+    height: clamp(120px, 15vw, 200px) !important;
+  }
+
+  .qr-url {
+    font-size: clamp(0.75rem, 1.2vw, 0.95rem);
+    color: var(--amber-dim);
+    font-family: monospace;
+    word-break: break-all;
+  }
+
+  /* ── MOBILE: stack to single column ── */
+  @media (max-width: 700px) {
+    body {
+      grid-template-columns: 1fr;
+      padding: 1.5rem;
+      gap: 1.5rem;
+    }
+    header { grid-column: 1; }
+    .col-right { flex-direction: row; align-items: center; gap: 1rem; flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="section-label">Mjödprovning</div>
+  <h1>Nära Mjöden-Upplevelse Februari 2026</h1>
+</header>
+
+<div class="col-left">
+  <div>
+    <div class="section-label">Resultat</div>
+    <a class="btn-results" href="results/Nära Mjöden-Upplevelse Februari 2026.html">Visa resultat →</a>
+  </div>
+
+  
+
+  <div class="btn-form-wrap">
+    <a class="btn-form"
+       href="https://docs.google.com/forms/d/e/1FAIpQLSdK0-LeTizBbqZXgOGMo20fqFEwdr3SQeIqy8Yjp190lpuClw/viewform?usp=sharing&ouid=117011815079806822734"
+       target="_blank">✏️ Fyll i formuläret</a>
+  </div>
+</div>
+
+<div class="col-right">
+  <div class="section-label">Den här sidan</div>
+  <div id="qr-code"></div>
+  <span class="qr-url">https://kbladin.github.io/mead-madness/</span>
+</div>
+
+<script>
+new QRCode(document.getElementById("qr-code"), {
+  text:         "https://kbladin.github.io/mead-madness/",
+  width:        200,
+  height:       200,
+  colorDark:    "#1a1410",
+  colorLight:   "#f0e6d0",
+  correctLevel: QRCode.CorrectLevel.M,
+});
+</script>
+</body>
+</html>
